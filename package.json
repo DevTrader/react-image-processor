@@ -1,7 +1,7 @@
 {
   "name": "react-image-processor",
-  "version": "0.0.1",
-  "description": "github repository star fetcher",
+  "version": "0.1.0",
+  "description": "React Components built-in Image Processor.",
   "main": "lib/image_processor",
   "scripts": {
     "lint": "eslint src/**/*.{js,jsx} spec/**/*.{js,jsx}",
