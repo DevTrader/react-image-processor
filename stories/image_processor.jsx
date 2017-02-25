@@ -59,4 +59,18 @@ storiesOf('<ImageProcessor />', module)
       src={src}
     />
   ))
+  .add('doubleflip', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="doubleflip"
+      src={src}
+    />
+  ))
+  .add('horizontalMirror', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="horizontalmirror"
+      src={src}
+    />
+  ))
   ;
