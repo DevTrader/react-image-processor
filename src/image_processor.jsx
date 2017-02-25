@@ -18,11 +18,20 @@ export default class ImageProcessor extends React.Component {
     }
   }
 
-  applyEffect() {
-    const canvas = document.createElement('canvas');
-    canvas.width = this.img.width;
-    canvas.height = this.img.height;
+  getCanvas(width, height) {
+    let canvas;
+    if (this.canvas) {
+      canvas = this.canvas;
+    } else {
+      canvas = document.createElement('canvas');
+    }
+    canvas.width = width;
+    canvas.height = height;
+    return canvas;
+  }
 
+  applyEffect() {
+    const canvas = this.getCanvas(this.img.width, this.img.height);
     const context = canvas.getContext('2d');
     context.drawImage(this.img, 0, 0);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -31,8 +40,7 @@ export default class ImageProcessor extends React.Component {
     func(imageData);
 
     context.putImageData(imageData, 0, 0);
-    const src = canvas.toDataURL();
-    this.img.src = src;
+    this.img.src = canvas.toDataURL();
   }
 
   render() {
