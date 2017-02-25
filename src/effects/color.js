@@ -1,4 +1,4 @@
-/* eslint import/prefer-default-export: 0 */
+/* eslint import/prefer-default-export: 0, no-param-reassign: 0 */
 
 export const getUnit8Array = len => new Uint8Array(len);
 
@@ -12,27 +12,26 @@ export const blackOrWhite = (red, green, blue, threshold) => {
 export const convertLuminanceLinearRGB = (red, green, blue) => red * 0.2126 + green * 0.7152 + blue * 0.0722;
 
 export const identityLUT = () => {
-  const lut = this.getUnit8Array(256);
-  for (let i = 0; i < lut.length; i++) {
+  const lut = getUnit8Array(256);
+  for (let i = 0; i < lut.length; i += 1) {
     lut[i] = i;
   }
   return lut;
 };
 
 export const applyLUT = (pix, lut) => {
-  const pixResult = Object.assign({}, pix);
+  const newPix = Object.assign({}, pix);
   const red = lut.red;
   const green = lut.green;
   const blue = lut.blue;
   const alpha = lut.alpha;
   const len = pix.length;
   for (let i = 0; i < len; i += 4) {
-    pixResult[i] = red[pix[i]];
-    pixResult[i + 1] = green[pix[i + 1]];
-    pixResult[i + 2] = blue[pix[i + 2]];
-    pixResult[i + 3] = alpha[pix[i + 3]];
+    pix[i] = red[newPix[i]];
+    pix[i + 1] = green[newPix[i + 1]];
+    pix[i + 2] = blue[newPix[i + 2]];
+    pix[i + 3] = alpha[newPix[i + 3]];
   }
-  return pixResult;
 };
 
 // http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c

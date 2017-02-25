@@ -10,6 +10,7 @@ storiesOf('<ImageProcessor />', module)
       {story()}
     </div>
   ))
+  // --Start: Basic effects
   .add('enhance', () => (
     <ImageProcessor
       alt="react story book sample image"
@@ -45,6 +46,20 @@ storiesOf('<ImageProcessor />', module)
       src={src}
     />
   ))
+  .add('saturate', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="saturate"
+      src={src}
+    />
+  ))
+  .add('brightnesscontrast', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="brightnesscontrast"
+      src={src}
+    />
+  ))
   .add('horizontalflip', () => (
     <ImageProcessor
       alt="react story book sample image"
@@ -56,6 +71,13 @@ storiesOf('<ImageProcessor />', module)
     <ImageProcessor
       alt="react story book sample image"
       effect="verticalflip"
+      src={src}
+    />
+  ))
+  .add('doubleflip', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="doubleflip"
       src={src}
     />
   ))
@@ -271,4 +293,5 @@ storiesOf('<ImageProcessor />', module)
       src={src}
     />
   ))
+  // --End: Instagram effects
   ;

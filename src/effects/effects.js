@@ -123,46 +123,44 @@ export const hueRotate = (imageData, options) => {
   return pix;
 };
 
-export const saturate = (imageData, options) => {
-  const pix = imageData.data;
-  const val = options.value ? options.value : 20;
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    const hsv = color.rgb2hsv(pix[i], pix[i + 1], pix[i + 2]);
-    hsv[1] = hsv[1] * val / 100;
+// TODO: accept option
+export const saturate = ({ data }) => {
+  const val = 20;
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    const hsv = color.rgb2hsv(data[i], data[i + 1], data[i + 2]);
+    hsv[1] *= val / 100;
     const rgb = color.hsv2rgb(hsv[0], hsv[1], hsv[2]);
-    pix[i] = rgb[0];
-    pix[i + 1] = rgb[1];
-    pix[i + 2] = rgb[2];
+    data[i] = rgb[0];
+    data[i + 1] = rgb[1];
+    data[i + 2] = rgb[2];
   }
-  return pix;
 };
 
-export const brightnessContrast = (imageData, options) => {
-  const pix = imageData.data;
-  const brightness = options.brightness ? options.brightness : -0.08;
-  const contrast = options.contrast ? options.contrast : 1.5;
-  const contrastAdjust = -128 * contrast + 128;
+// TODO: accept option
+export const brightnessContrast = ({ data }) => {
+  const brightness = -0.08;
+  const contrast = 1.5;
+  const contrastAdjust = (-128 * contrast) + 128;
   const brightnessAdjust = 255 * brightness;
   const adjust = contrastAdjust + brightnessAdjust;
   const lut = color.getUnit8Array(256);
   const len = lut.length;
-  for (let i = 0; i < len; i++) {
-    const c = i * contrast + adjust;
+  for (let i = 0; i < len; i += 1) {
+    const c = (i * contrast) + adjust;
     if (c < 0) {
       lut[i] = 0;
     } else {
       lut[i] = (c > 255) ? 255 : c;
     }
   }
-  return color.applyLUT(
-        pix,
+  return color.applyLUT(data,
     {
       red: lut,
       green: lut,
       blue: lut,
       alpha: color.identityLUT(),
     },
-    );
+  );
 };
 
 export const horizontalFlip = ({ data, width, height }) => {
@@ -197,7 +195,7 @@ export const verticalFlip = ({ data, width, height }) => {
 export const doubleFlip = ({ data }) => {
   const newPix = Object.assign([], data);
   for (let i = 0, n = data.length; i < n; i += 4) {
-    const k = n - 1;
+    const k = n - i;
     data[i] = newPix[k];
     data[i + 1] = newPix[k + 1];
     data[i + 2] = newPix[k + 2];
