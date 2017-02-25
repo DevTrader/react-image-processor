@@ -36,10 +36,10 @@ export const grayscale = (imageData) => {
   const pix = imageData.data;
   for (let i = 0, n = pix.length; i < n; i += 4) {
     const { r, g, b } = { r: pix[i], g: pix[i + 1], b: pix[i + 1] };
-    const grayscale = color.convertNTSC(r, g, b);
-    pix[i] = grayscale;
-    pix[i + 1] = grayscale;
-    pix[i + 2] = grayscale;
+    const scale = color.convertNTSC(r, g, b);
+    pix[i] = scale;
+    pix[i + 1] = scale;
+    pix[i + 2] = scale;
   }
   return pix;
 };
