@@ -208,32 +208,33 @@ export const verticalFlip = ({ data, width, height }) => {
   return newPix;
 };
 
-export const doubleFlip = ({ data }) => {
-  const newPix = Object.assign([], data);
-  for (let i = 0, n = data.length; i < n; i += 4) {
-    const k = n - 1;
-    newPix[i] = data[k];
-    newPix[i + 1] = data[k + 1];
-    newPix[i + 2] = data[k + 2];
-    newPix[i + 3] = data[k + 3];
+export const doubleFlip = (imageData) => {
+  const pix = imageData.data;
+  const newPix = Object.assign([], pix);
+  for (let i = 0, n = pix.length; i < n; i += 4) {
+    pix[i] = newPix[n - i];
+    pix[i + 1] = newPix[n - i + 1];
+    pix[i + 2] = newPix[n - i + 2];
+    pix[i + 3] = newPix[n - i + 3];
   }
-  return newPix;
+  return pix;
 };
 
-export const horizontalMirror = ({ data, width, height }) => {
-  const newPix = Object.assign([], data);
-  for (let i = 0; i < height; i += 1) {
-    const w = i * width;
-    for (let j = 0; j < width; j += 1) {
-      const off = (w + j) * 4;
-      const dstOff = (w + (width - j - 1)) * 4;
-      newPix[dstOff] = data[off];
-      newPix[dstOff + 1] = data[off + 1];
-      newPix[dstOff + 2] = data[off + 2];
-      newPix[dstOff + 3] = data[off + 3];
+export const horizontalMirror = (imageData) => {
+  const pix = imageData.data;
+  const width = imageData.width;
+  const height = imageData.height;
+  for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++) {
+      const off = (i * width + j) * 4;
+      const dstOff = (i * width + (width - j - 1)) * 4;
+      pix[dstOff] = pix[off];
+      pix[dstOff + 1] = pix[off + 1];
+      pix[dstOff + 2] = pix[off + 2];
+      pix[dstOff + 3] = pix[off + 3];
     }
   }
-  return newPix;
+  return pix;
 };
 
 export const verticalMirror = (imageData) => {
