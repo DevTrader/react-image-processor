@@ -10,10 +10,39 @@ storiesOf('<ImageProcessor />', module)
       {story()}
     </div>
   ))
+  .add('enhance', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      src={src}
+      effect="enhance"
+    />
+  ))
   .add('grayscale', () => (
     <ImageProcessor
-      alt="grayscale image"
+      alt="react story book sample image"
       src={src}
       effect="grayscale"
-      />
-  ));
+    />
+  ))
+  .add('sepia', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      src={src}
+      effect="sepia"
+    />
+  ))
+  .add('luminance', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      src={src}
+      effect="luminance"
+    />
+  ))
+  .add('negaposi', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      src={src}
+      effect="negaposi"
+    />
+  ))
+  ;

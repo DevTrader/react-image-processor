@@ -22,12 +22,12 @@ const applyInstagramFilter = (filterType, pix) => {
   return newPix;
 };
 
-export const enhance = (imageData) => {
-  const pix = imageData.data;
+export const enhance = (pixSrc) => {
+  const pix = Object.assign([], pixSrc);
   for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i] = pix[i] * 1.24;
-    pix[i + 1] = pix[i + 1] * 1.33;
-    pix[i + 2] = pix[i + 2] * 1.21;
+    pix[i] *= 1.24;
+    pix[i + 1] *= 1.33;
+    pix[i + 2] *= 1.21;
   }
   return pix;
 };
@@ -44,30 +44,30 @@ export const grayscale = (pixSrc) => {
   return pix;
 };
 
-export const sepia = (imageData) => {
-  const pix = imageData.data;
+export const sepia = (pixSrc) => {
+  const pix = Object.assign([], pixSrc);
   for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i] = pix[i] * 1.07;
-    pix[i + 1] = pix[i + 1] * 0.74;
-    pix[i + 2] = pix[i + 2] * 0.43;
+    pix[i] *= 1.07;
+    pix[i + 1] *= 0.74;
+    pix[i + 2] *= 0.43;
   }
   return pix;
 };
 
-export const luminance = (imageData) => {
-  const pix = imageData.data;
+export const luminance = (pixSrc) => {
+  const pix = Object.assign([], pixSrc);
   for (let i = 0, n = pix.length; i < n; i += 4) {
     const { r, g, b } = { r: pix[i], g: pix[i + 1], b: pix[i + 1] };
-    const luminance = color.convertLuminanceLinearRGB(r, g, b);
-    pix[i] = luminance;
-    pix[i + 1] = luminance;
-    pix[i + 2] = luminance;
+    const luminanceScale = color.convertLuminanceLinearRGB(r, g, b);
+    pix[i] = luminanceScale;
+    pix[i + 1] = luminanceScale;
+    pix[i + 2] = luminanceScale;
   }
   return pix;
 };
 
-export const negaposi = (imageData) => {
-  const pix = imageData.data;
+export const negaposi = (pixSrc) => {
+  const pix = Object.assign([], pixSrc);
   for (let i = 0, n = pix.length; i < n; i += 4) {
     pix[i] = 255 - pix[i];
     pix[i + 1] = 255 - pix[i + 1];
