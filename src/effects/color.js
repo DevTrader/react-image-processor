@@ -1,4 +1,4 @@
-/* eslint import/prefer-default-export: 0, no-param-reassign: 0 */
+/* eslint import/prefer-default-export: 0, no-param-reassign: 0, no-mixed-operators: 0, */
 
 export const getUnit8Array = len => new Uint8Array(len);
 
@@ -9,7 +9,7 @@ export const blackOrWhite = (red, green, blue, threshold) => {
   return (threshold >= value) ? 255 : 0;
 };
 
-export const convertLuminanceLinearRGB = (red, green, blue) => red * 0.2126 + green * 0.7152 + blue * 0.0722;
+export const convertLuminanceLinearRGB = (r, g, b) => r * 0.2126 + g * 0.7152 + b * 0.0722;
 
 export const identityLUT = () => {
   const lut = getUnit8Array(256);

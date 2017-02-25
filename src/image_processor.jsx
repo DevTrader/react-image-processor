@@ -23,7 +23,7 @@ export default class ImageProcessor extends React.Component {
     if (this.canvas) {
       canvas = this.canvas;
     } else {
-      canvas = document.createElement('canvas');
+      canvas = document.createElement('canvas'); // eslint-disable-line no-undef
     }
     canvas.width = width;
     canvas.height = height;
@@ -46,7 +46,7 @@ export default class ImageProcessor extends React.Component {
   render() {
     return (
       <img
-        ref={img => this.img = img}
+        ref={img => this.img = img} // eslint-disable-line no-return-assign
         alt={this.props.alt}
         src={this.props.src}
       />

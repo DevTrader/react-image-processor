@@ -4,6 +4,9 @@ import * as color from './color';
 
 /* eslint import/prefer-default-export: 0, no-param-reassign: 0 */
 
+// TODO: refactor buffer manipulation with bitwaise operations
+// https://hacks.mozilla.org/2011/12/faster-canvas-pixel-manipulation-with-typed-arrays/
+
 const applyInstagramFilter = (filterType, data) => {
   const pix = Object.assign([], data);
   const rgbMap = lagrangeRgbMap[filterType];
