@@ -12,7 +12,8 @@ storiesOf('<ImageProcessor />', module)
   ))
   .add('grayscale', () => (
     <ImageProcessor
+      alt="grayscale image"
       src={src}
-      effect='grayscale'
+      effect="grayscale"
       />
   ));

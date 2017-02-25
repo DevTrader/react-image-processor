@@ -7,8 +7,6 @@
     "import"
   ],
   "rules": {
-    "arrow-body-style": 0,
-    "react/jsx-closing-bracket-location": 0
   },
   "env": {
     "es6": true,

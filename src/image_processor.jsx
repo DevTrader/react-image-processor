@@ -1,58 +1,11 @@
 import React from 'react';
-import * as effects from './effects/effects';
 import effectsShape from './effects_shape';
-
-const effectMap = {
-  lark: effects.lark,
-  reyes: effects.reyes,
-  juno: effects.juno,
-  slumber: effects.slumber,
-  crema: effects.crema,
-  ludwig: effects.ludwig,
-  aden: effects.aden,
-  perpetua: effects.perpetua,
-  amaro: effects.amaro,
-  mayfair: effects.mayfair,
-  rise: effects.rise,
-  hudson: effects.hudson,
-  valencia: effects.valencia,
-  xpro2: effects.xpro2,
-  sierra: effects.sierra,
-  willow: effects.willow,
-  lofi: effects.lofi,
-  earlybird: effects.earlybird,
-  brannan: effects.brannan,
-  inkwell: effects.inkwell,
-  hefe: effects.hefe,
-  nashville: effects.nashville,
-  sutro: effects.sutro,
-  toaster: effects.toaster,
-  walden: effects.walden,
-  nineteenseventyseven: effects.nineteenSeventySeven,
-  kelvin: effects.kelvin,
-  enhance: effects.enhance,
-  grayscale: effects.grayscale,
-  sepia: effects.sepia,
-  luminance: effects.luminance,
-  opacity: effects.opacity,
-  brighten: effects.brighten,
-  darken: effects.darken,
-  threshold: effects.threshold,
-  negaposi: effects.negaposi,
-  brightnesscontrast: effects.brightnessContrast,
-  huerotate: effects.hueRotate,
-  saturate: effects.saturate,
-  horizontalflip: effects.horizontalFlip,
-  verticalflip: effects.verticalFlip,
-  doubleflip: effects.doubleFlip,
-  horizontalmirror: effects.horizontalMirror,
-  verticalmirror: effects.verticalMirror,
-  xymirror: effects.XYMirror,
-};
+import effectsMap from './effects_map';
 
 export default class ImageProcessor extends React.Component {
   static get propTypes() {
     return {
+      alt: React.PropTypes.string.isRequired,
       src: React.PropTypes.string.isRequired,
       effect: effectsShape.isRequired,
     };
@@ -66,14 +19,21 @@ export default class ImageProcessor extends React.Component {
   }
 
   componentDidMount() {
-    const imageData = this.getPixels(this.img);
+    const imageData = this.getImageData();
 
-    const func = effectMap[this.props.effect.toLowerCase()];
-    const convertedPixels = func(imageData.data); // e.g. grayscape();
-    const newImageData = new ImageData(Uint8ClampedArray.from(convertedPixels), imageData.width, imageData.height);
+    const func = effectsMap[this.props.effect.toLowerCase()];
+    const convertedPixels = func(imageData.data);
+    const clampedArray = Uint8ClampedArray.from(convertedPixels);
+    const newImageData = new ImageData(clampedArray, this.img.width, this.img.height);
 
-    const src = this.renderCanvas(this.img, newImageData);
-    this.setState({ src });
+    this.renderCanvas(newImageData);
+  }
+
+  getImageData() {
+    const canvas = this.buildCanvas(this.img.width, this.img.height);
+    const context = canvas.getContext('2d');
+    context.drawImage(this.img, 0, 0);
+    return context.getImageData(0, 0, canvas.width, canvas.height);
   }
 
   buildCanvas(width, height) {
@@ -81,27 +41,21 @@ export default class ImageProcessor extends React.Component {
     canvas.width = width;
     canvas.height = height;
     return canvas;
-  };
+  }
 
-  getPixels(img) {
-    const canvas = this.buildCanvas(img.width, img.height);
-    const context = canvas.getContext('2d');
-    context.drawImage(img, 0, 0);
-    return context.getImageData(0, 0, canvas.width, canvas.height);
-  };
-
-  renderCanvas(img, newImageData) {
-    const canvas = this.buildCanvas(img.width, img.height);
+  renderCanvas(newImageData) {
+    const canvas = this.buildCanvas(this.img.width, this.img.height);
     const context = canvas.getContext('2d');
     context.putImageData(newImageData, 0, 0);
-    return canvas.toDataURL();
-  };
+    const src = canvas.toDataURL();
+    this.img.src = src;
+  }
 
   render() {
     return (
       <img
-        ref={(img) => this.img = img}
-        alt='image processor'
+        ref={img => this.img = img}
+        alt={this.props.alt}
         src={this.state.src}
       />
     );
