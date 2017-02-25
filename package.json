@@ -1,14 +1,12 @@
 {
   "name": "react-image-processor",
-  "version": "0.1.1",
+  "version": "0.0.1",
   "description": "github repository star fetcher",
-  "main": "lib/star.js",
+  "main": "lib/image_processor",
   "scripts": {
     "lint": "eslint src/**/*.{js,jsx} spec/**/*.{js,jsx}",
     "build": "babel src --out-dir lib --source-maps",
-    "test": "nyc mocha --opts spec/mocha.opts spec/**/*.spec.jsx",
-    "test:coverage": "NODE_ENV=test nyc mocha --opts spec/mocha.opts spec/**/*.spec.jsx",
-    "ci:coveralls": "nyc report --reporter=text-lcov | $(npm bin)/coveralls",
+    "test": "mocha --opts spec/mocha.opts spec/**/*.spec.jsx",
     "story:start": "start-storybook -p 9001 -c .storybook",
     "story:build": "build-storybook -c .storybook -o doc",
     "story:deploy": "sh bin/deploy",
@@ -32,8 +30,7 @@
     "url": "https://github.com/kenju/react-image-processor/issues"
   },
   "homepage": "https://github.com/kenju/react-image-processor#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@kadira/storybook": "^2.35.2",
     "babel-cli": "^6.14.0",
