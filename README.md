@@ -1,6 +1,39 @@
 # react-image-processor
 
-TBD
+React Components built-in Image Processor.
+
+Demo: https://kenju.github.io/react-image-processor/
+
+<!-- TOC -->
+
+- [react-image-processor](#react-image-processor)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [License](#license)
+
+<!-- /TOC -->
+
+## Install
+
+```bash
+npm install --save react-image-processor
+```
+
+or,
+
+```bash
+yarn add react-image-processor
+```
+
+## Usage
+
+```jsx
+<ImageProcessor
+  alt='react image sample'
+  src='./path/to/image.jpg'
+  effect='grayscale'
+  />
+```
 
 ## License
 
