@@ -3,10 +3,10 @@ import * as color from './color';
 
 /* eslint import/prefer-default-export: 0, no-param-reassign: 0 */
 
-const lagrangeRgbMap = require('./rgb_map');
+import lagrangeRgbMap from './rgb_map';
 
-const applyInstagramFilter = (filterType, pix) => {
-  const newPix = pix.slice();
+const applyInstagramFilter = (filterType, data) => {
+  const pix = Object.assign([], data);
   const rgbMap = lagrangeRgbMap[filterType];
   const lagrangeR = new Lagrange(0, 0, 1, 1);
   const lagrangeG = new Lagrange(0, 0, 1, 1);
@@ -15,11 +15,10 @@ const applyInstagramFilter = (filterType, pix) => {
   lagrangeG.addMultiPoints(rgbMap.g);
   lagrangeB.addMultiPoints(rgbMap.b);
   for (let i = 0, n = pix.length; i < n; i += 4) {
-    newPix[i] = lagrangeR.valueOf(pix[i]);
-    newPix[i + 1] = lagrangeB.valueOf(pix[i + 1]);
-    newPix[i + 2] = lagrangeG.valueOf(pix[i + 2]);
+    data[i] = lagrangeR.valueOf(pix[i]);
+    data[i + 1] = lagrangeB.valueOf(pix[i + 1]);
+    data[i + 2] = lagrangeG.valueOf(pix[i + 2]);
   }
-  return newPix;
 };
 
 export const enhance = ({ data }) => {
@@ -196,64 +195,55 @@ export const verticalFlip = ({ data, width, height }) => {
   }
 };
 
-export const doubleFlip = (imageData) => {
-  const pix = imageData.data;
-  const newPix = Object.assign([], pix);
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i] = newPix[n - i];
-    pix[i + 1] = newPix[n - i + 1];
-    pix[i + 2] = newPix[n - i + 2];
-    pix[i + 3] = newPix[n - i + 3];
+export const doubleFlip = ({ data }) => {
+  const newPix = Object.assign([], data);
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    const k = n - 1;
+    data[i] = newPix[k];
+    data[i + 1] = newPix[k + 1];
+    data[i + 2] = newPix[k + 2];
+    data[i + 3] = newPix[k + 3];
   }
-  return pix;
 };
 
-export const horizontalMirror = (imageData) => {
-  const pix = imageData.data;
-  const width = imageData.width;
-  const height = imageData.height;
-  for (let i = 0; i < height; i++) {
-    for (let j = 0; j < width; j++) {
-      const off = (i * width + j) * 4;
-      const dstOff = (i * width + (width - j - 1)) * 4;
-      pix[dstOff] = pix[off];
-      pix[dstOff + 1] = pix[off + 1];
-      pix[dstOff + 2] = pix[off + 2];
-      pix[dstOff + 3] = pix[off + 3];
+export const horizontalMirror = ({ data, width, height }) => {
+  for (let i = 0; i < height; i += 1) {
+    const k = i * width;
+    for (let j = 0; j < width; j += 1) {
+      const off = (k + j) * 4;
+      const dstOff = (k + (width - j - 1)) * 4;
+      data[dstOff] = data[off];
+      data[dstOff + 1] = data[off + 1];
+      data[dstOff + 2] = data[off + 2];
+      data[dstOff + 3] = data[off + 3];
     }
   }
-  return pix;
 };
 
-export const verticalMirror = (imageData) => {
-  const pix = imageData.data;
-  const width = imageData.width;
-  const height = imageData.height;
-  for (let i = 0; i < height; i++) {
-    for (let j = 0; j < width; j++) {
-      const off = (i * width + j) * 4;
-      const dstOff = ((height - i - 1) * width + j) * 4;
-      pix[dstOff] = pix[off];
-      pix[dstOff + 1] = pix[off + 1];
-      pix[dstOff + 2] = pix[off + 2];
-      pix[dstOff + 3] = pix[off + 3];
+export const verticalMirror = ({ data, width, height }) => {
+  for (let i = 0; i < height; i += 1) {
+    for (let j = 0; j < width; j += 1) {
+      const off = ((i * width) + j) * 4;
+      const dstOff = (((height - i - 1) * width) + j) * 4;
+      data[dstOff] = data[off];
+      data[dstOff + 1] = data[off + 1];
+      data[dstOff + 2] = data[off + 2];
+      data[dstOff + 3] = data[off + 3];
     }
   }
-  return pix;
 };
 
-export const XYMirror = (imageData) => {
-  const pix = imageData.data;
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i] = pix[n - i];
-    pix[i + 1] = pix[n - i + 1];
-    pix[i + 2] = pix[n - i + 2];
-    pix[i + 3] = pix[n - i + 3];
+export const XYMirror = ({ data }) => {
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    const k = n - i;
+    data[i] = data[k];
+    data[i + 1] = data[k + 1];
+    data[i + 2] = data[k + 2];
+    data[i + 3] = data[k + 3];
   }
-  return pix;
 };
 
-export const lark = imageData => applyInstagramFilter('lark', imageData.data);
+export const lark = ({ data }) => applyInstagramFilter('lark', data);
 export const reyes = imageData => applyInstagramFilter('reyes', imageData.data);
 export const juno = imageData => applyInstagramFilter('juno', imageData.data);
 export const slumber = imageData => applyInstagramFilter('slumber', imageData.data);

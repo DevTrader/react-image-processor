@@ -59,4 +59,32 @@ storiesOf('<ImageProcessor />', module)
       src={src}
     />
   ))
+  .add('horizontalmirror', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="horizontalmirror"
+      src={src}
+    />
+  ))
+  .add('verticalmirror', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="verticalmirror"
+      src={src}
+    />
+  ))
+  .add('xymirror', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="xymirror"
+      src={src}
+    />
+  ))
+  .add('lark', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="lark"
+      src={src}
+    />
+  ))
   ;
