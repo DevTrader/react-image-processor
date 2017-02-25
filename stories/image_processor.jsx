@@ -46,6 +46,41 @@ storiesOf('<ImageProcessor />', module)
       src={src}
     />
   ))
+  .add('opacity', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="opacity"
+      src={src}
+    />
+  ))
+  .add('brighten', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="brighten"
+      src={src}
+    />
+  ))
+  .add('darken', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="darken"
+      src={src}
+    />
+  ))
+  .add('threshold', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="threshold"
+      src={src}
+    />
+  ))
+  .add('huerotate', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="huerotate"
+      src={src}
+    />
+  ))
   .add('saturate', () => (
     <ImageProcessor
       alt="react story book sample image"

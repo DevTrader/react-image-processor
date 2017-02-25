@@ -64,63 +64,56 @@ export const negaposi = ({ data }) => {
   }
 };
 
-export const opacity = (imageData, options) => {
-  const pix = ({ data }).data;
-  const val = options.value ? options.value : 0.5;
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i + 3] = pix[i + 3] * val;
+export const opacity = ({ data }) => {
+  const val = 0.5;
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    data[i + 3] = data[i + 3] * val;
   }
-  return pix;
 };
 
-export const brighten = (imageData, options) => {
-  const pix = imageData.data;
-  const val = options.value ? options.value : 50;
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i] += val;
-    pix[i + 1] += val;
-    pix[i + 2] += val;
+// TODO: accept option
+export const brighten = ({ data }) => {
+  const val = 50;
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    data[i] += val;
+    data[i + 1] += val;
+    data[i + 2] += val;
   }
-  return pix;
 };
 
-export const darken = (imageData, options) => {
-  const pix = imageData.data;
-  const val = options.value ? options.value : 50;
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i] -= val;
-    pix[i + 1] -= val;
-    pix[i + 2] -= val;
+// TODO: accept option
+export const darken = ({ data }) => {
+  const val = 50;
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    data[i] -= val;
+    data[i + 1] -= val;
+    data[i + 2] -= val;
   }
-  return pix;
 };
 
-export const threshold = (imageData) => {
-  const pix = imageData.data;
-  const len = pix.length;
+export const threshold = ({ data }) => {
+  const len = data.length;
   for (let i = 0; i < len; i += 4) {
-    const { r, g, b } = { r: pix[i], g: pix[i + 1], b: pix[i + 1] };
-    const threshold = color.convertNTSC(r, g, b);
-    const bw = color.blackOrWhite(r, g, b, threshold);
-    pix[i] = bw;
-    pix[i + 1] = bw;
-    pix[i + 2] = bw;
+    const { r, g, b } = { r: data[i], g: data[i + 1], b: data[i + 1] };
+    const thresholdScale = color.convertNTSC(r, g, b);
+    const bw = color.blackOrWhite(r, g, b, thresholdScale);
+    data[i] = bw;
+    data[i + 1] = bw;
+    data[i + 2] = bw;
   }
-  return pix;
 };
 
-export const hueRotate = (imageData, options) => {
-  const pix = imageData.data;
-  const deg = options.degree ? options.degree : 45;
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    const hsv = color.rgb2hsv(pix[i], pix[i + 1], pix[i + 2]);
-    hsv[0] = hsv[0] * deg / 360;
+// TODO: accept option
+export const hueRotate = ({ data }) => {
+  const deg = 45;
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    const hsv = color.rgb2hsv(data[i], data[i + 1], data[i + 2]);
+    hsv[0] *= deg / 360;
     const rgb = color.hsv2rgb(hsv[0], hsv[1], hsv[2]);
-    pix[i] = rgb[0];
-    pix[i + 1] = rgb[1];
-    pix[i + 2] = rgb[2];
+    data[i] = rgb[0];
+    data[i + 1] = rgb[1];
+    data[i + 2] = rgb[2];
   }
-  return pix;
 };
 
 // TODO: accept option
