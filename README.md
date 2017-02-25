@@ -1,17 +1,22 @@
 # react-image-processor
 
-React Components built-in Image Processor.
-
-Demo: https://kenju.github.io/react-image-processor/
+> React Components built-in Image Processor.
 
 <!-- TOC -->
 
 - [react-image-processor](#react-image-processor)
+  - [Demo](#demo)
   - [Install](#install)
   - [Usage](#usage)
+  - [API](#api)
+    - [Available Effects](#available-effects)
   - [License](#license)
 
 <!-- /TOC -->
+
+## Demo
+
+https://kenju.github.io/react-image-processor/
 
 ## Install
 
@@ -34,6 +39,64 @@ yarn add react-image-processor
   effect='grayscale'
   />
 ```
+
+## API
+
+props | type | description
+------|------|--------------
+alt   |String| Same attribute with `<img />` tag's
+src   |String| Same attribute with `<img />` tag's
+effect|oneOf | one of [available effects](#available-effects) all in smaller cases
+
+### Available Effects
+
+See [this file in `master` branch](https://github.com/kenju/react-image-processor/blob/master/src/effects_shape.js) for all updated available lists.
+
+- Basic filters
+	- grayscale
+	- sepia
+	- luminance
+	- brighten
+	- darken
+	- opacity
+	- negaposi
+	- brightnessContrast
+	- huerotate
+	- saturate
+	- horizontalFlip
+	- verticalFlip
+	- doubleFlip
+	- horizontalMirror
+	- verticalMirror
+	- XYMirror
+- Instagram filters
+	- lark
+	- reyes
+	- juno
+	- slumber
+	- crema
+	- ludwig
+	- aden
+	- perpetua
+	- amaro
+	- mayfair
+	- rise
+	- hudson
+	- valencia
+	- xpro2
+	- sierra
+	- willow
+	- lofi
+	- earlybird
+	- brannan
+	- inkwell
+	- hefe
+	- nashville
+	- sutro
+	- toaster
+	- walden
+	- nineteenSeventySeven
+	- kelvin
 
 ## License
 
