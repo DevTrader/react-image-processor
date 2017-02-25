@@ -10,8 +10,9 @@ storiesOf('<ImageProcessor />', module)
       {story()}
     </div>
   ))
-  .add('with git/git', () => (
+  .add('with grayscale', () => (
     <ImageProcessor
       src={src}
+      effect='grayscale'
       />
   ));
