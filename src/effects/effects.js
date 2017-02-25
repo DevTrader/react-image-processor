@@ -1,9 +1,8 @@
 import Lagrange from './lagrange';
+import lagrangeRgbMap from './rgb_map';
 import * as color from './color';
 
 /* eslint import/prefer-default-export: 0, no-param-reassign: 0 */
-
-import lagrangeRgbMap from './rgb_map';
 
 const applyInstagramFilter = (filterType, data) => {
   const pix = Object.assign([], data);
@@ -66,7 +65,7 @@ export const negaposi = ({ data }) => {
 };
 
 export const opacity = (imageData, options) => {
-  const pix = imageData.data;
+  const pix = ({ data }).data;
   const val = options.value ? options.value : 0.5;
   for (let i = 0, n = pix.length; i < n; i += 4) {
     pix[i + 3] = pix[i + 3] * val;
@@ -244,40 +243,36 @@ export const XYMirror = ({ data }) => {
 };
 
 export const lark = ({ data }) => applyInstagramFilter('lark', data);
-export const reyes = imageData => applyInstagramFilter('reyes', imageData.data);
-export const juno = imageData => applyInstagramFilter('juno', imageData.data);
-export const slumber = imageData => applyInstagramFilter('slumber', imageData.data);
-export const crema = imageData => applyInstagramFilter('crema', imageData.data);
-export const ludwig = imageData => applyInstagramFilter('ludwig', imageData.data);
-export const aden = imageData => applyInstagramFilter('aden', imageData.data);
-export const perpetua = imageData => applyInstagramFilter('perpetua', imageData.data);
-export const amaro = imageData => applyInstagramFilter('amaro', imageData.data);
-export const mayfair = imageData => applyInstagramFilter('mayfair', imageData.data);
-export const rise = imageData => applyInstagramFilter('rise', imageData.data);
-export const hudson = imageData => applyInstagramFilter('hudson', imageData.data);
-export const valencia = imageData => applyInstagramFilter('valencia', imageData.data);
-export const xpro2 = imageData => applyInstagramFilter('xpro2', imageData.data);
-export const sierra = imageData => applyInstagramFilter('sierra', imageData.data);
-export const willow = imageData => applyInstagramFilter('willow', imageData.data);
-export const lofi = imageData => applyInstagramFilter('lofi', imageData.data);
-export const earlybird = imageData => applyInstagramFilter('earlybird', imageData.data);
-export const brannan = imageData => applyInstagramFilter('brannan', imageData.data);
-export const inkwell = (imageData) => {
-  const pix = imageData.data;
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    const val = pix[i] * 0.33 + pix[i + 1] * 0.58 + pix[i + 2] * 0.22;
-    pix[i] = val;
-    pix[i + 1] = val;
-    pix[i + 2] = val;
+export const reyes = ({ data }) => applyInstagramFilter('reyes', data);
+export const juno = ({ data }) => applyInstagramFilter('juno', data);
+export const slumber = ({ data }) => applyInstagramFilter('slumber', data);
+export const crema = ({ data }) => applyInstagramFilter('crema', data);
+export const ludwig = ({ data }) => applyInstagramFilter('ludwig', data);
+export const aden = ({ data }) => applyInstagramFilter('aden', data);
+export const perpetua = ({ data }) => applyInstagramFilter('perpetua', data);
+export const amaro = ({ data }) => applyInstagramFilter('amaro', data);
+export const mayfair = ({ data }) => applyInstagramFilter('mayfair', data);
+export const rise = ({ data }) => applyInstagramFilter('rise', data);
+export const hudson = ({ data }) => applyInstagramFilter('hudson', data);
+export const valencia = ({ data }) => applyInstagramFilter('valencia', data);
+export const xpro2 = ({ data }) => applyInstagramFilter('xpro2', data);
+export const sierra = ({ data }) => applyInstagramFilter('sierra', data);
+export const willow = ({ data }) => applyInstagramFilter('willow', data);
+export const lofi = ({ data }) => applyInstagramFilter('lofi', data);
+export const earlybird = ({ data }) => applyInstagramFilter('earlybird', data);
+export const brannan = ({ data }) => applyInstagramFilter('brannan', data);
+export const hefe = ({ data }) => applyInstagramFilter('hefe', data);
+export const nashville = ({ data }) => applyInstagramFilter('nashville', data);
+export const sutro = ({ data }) => applyInstagramFilter('sutro', data);
+export const toaster = ({ data }) => applyInstagramFilter('toaster', data);
+export const walden = ({ data }) => applyInstagramFilter('walden', data);
+export const nineteenSeventySeven = ({ data }) => applyInstagramFilter('nineteenSeventySeven', data);
+export const kelvin = ({ data }) => applyInstagramFilter('kelvin', data);
+export const inkwell = ({ data }) => {
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    const val = (data[i] * 0.33) + (data[i + 1] * 0.58) + (data[i + 2] * 0.22);
+    data[i] = val;
+    data[i + 1] = val;
+    data[i + 2] = val;
   }
-  return pix;
 };
-
-export const hefe = imageData => applyInstagramFilter('hefe', imageData.data);
-export const nashville = imageData => applyInstagramFilter('nashville', imageData.data);
-export const sutro = imageData => applyInstagramFilter('sutro', imageData.data);
-export const toaster = imageData => applyInstagramFilter('toaster', imageData.data);
-export const walden = imageData => applyInstagramFilter('walden', imageData.data);
-export const nineteenSeventySeven = imageData => applyInstagramFilter('nineteenSeventySeven', imageData.data);
-export const kelvin = imageData => applyInstagramFilter('kelvin', imageData.data);
-
