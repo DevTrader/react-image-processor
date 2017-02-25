@@ -10,6 +10,7 @@
   - [Usage](#usage)
   - [API](#api)
     - [Available Effects](#available-effects)
+  - [Future](#future)
   - [License](#license)
 
 <!-- /TOC -->
@@ -97,6 +98,13 @@ See [this file in `master` branch](https://github.com/kenju/react-image-processo
 	- walden
 	- nineteenSeventySeven
 	- kelvin
+
+## Future
+
+- Improve perfomance in manipulating ImageData ( possibely with Web Worker API)
+- Support 'options' props to some of effects (e.g. `huerotate`, `darken`, etc)
+- Support plugin architecture ( ImageData |> Plugin Modules |> ImageData )
+- Improve spec with ava
 
 ## License
 
