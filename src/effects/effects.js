@@ -22,8 +22,8 @@ const applyInstagramFilter = (filterType, pix) => {
   return newPix;
 };
 
-export const enhance = (pixSrc) => {
-  const pix = Object.assign([], pixSrc);
+export const enhance = ({ data }) => {
+  const pix = Object.assign([], data);
   for (let i = 0, n = pix.length; i < n; i += 4) {
     pix[i] *= 1.24;
     pix[i + 1] *= 1.33;
@@ -32,8 +32,8 @@ export const enhance = (pixSrc) => {
   return pix;
 };
 
-export const grayscale = (pixSrc) => {
-  const pix = Object.assign([], pixSrc);
+export const grayscale = ({ data }) => {
+  const pix = Object.assign([], data);
   for (let i = 0, n = pix.length; i < n; i += 4) {
     const { r, g, b } = { r: pix[i], g: pix[i + 1], b: pix[i + 1] };
     const scale = color.convertNTSC(r, g, b);
@@ -44,8 +44,8 @@ export const grayscale = (pixSrc) => {
   return pix;
 };
 
-export const sepia = (pixSrc) => {
-  const pix = Object.assign([], pixSrc);
+export const sepia = ({ data }) => {
+  const pix = Object.assign([], data);
   for (let i = 0, n = pix.length; i < n; i += 4) {
     pix[i] *= 1.07;
     pix[i + 1] *= 0.74;
@@ -54,8 +54,8 @@ export const sepia = (pixSrc) => {
   return pix;
 };
 
-export const luminance = (pixSrc) => {
-  const pix = Object.assign([], pixSrc);
+export const luminance = ({ data }) => {
+  const pix = Object.assign([], data);
   for (let i = 0, n = pix.length; i < n; i += 4) {
     const { r, g, b } = { r: pix[i], g: pix[i + 1], b: pix[i + 1] };
     const luminanceScale = color.convertLuminanceLinearRGB(r, g, b);
@@ -66,8 +66,8 @@ export const luminance = (pixSrc) => {
   return pix;
 };
 
-export const negaposi = (pixSrc) => {
-  const pix = Object.assign([], pixSrc);
+export const negaposi = ({ data }) => {
+  const pix = Object.assign([], data);
   for (let i = 0, n = pix.length; i < n; i += 4) {
     pix[i] = 255 - pix[i];
     pix[i + 1] = 255 - pix[i + 1];
@@ -177,40 +177,35 @@ export const brightnessContrast = (imageData, options) => {
     );
 };
 
-export const horizontalFlip = (imageData) => {
-  const pix = imageData.data;
-  const width = imageData.width;
-  const height = imageData.height;
-  const newPix = Object.assign([], pix);
-  for (let i = 0; i < height; i++) {
-    for (let j = 0; j < width; j++) {
-      const off = (i * width + j) * 4;
-      const dstOff = (i * width + (width - j - 1)) * 4;
-      pix[dstOff] = newPix[off];
-      pix[dstOff + 1] = newPix[off + 1];
-      pix[dstOff + 2] = newPix[off + 2];
-      pix[dstOff + 3] = newPix[off + 3];
+export const horizontalFlip = ({ data, width, height }) => {
+  const newPix = Object.assign([], data);
+  for (let i = 0; i < height; i += 1) {
+    const w = i * width;
+    for (let j = 0; j < width; j += 1) {
+      const off = (w + j) * 4;
+      const dstOff = (w + (width - j - 1)) * 4;
+      newPix[dstOff] = data[off];
+      newPix[dstOff + 1] = data[off + 1];
+      newPix[dstOff + 2] = data[off + 2];
+      newPix[dstOff + 3] = data[off + 3];
     }
   }
-  return pix;
+  return newPix;
 };
 
-export const verticalFlip = (imageData) => {
-  const pix = imageData.data;
-  const width = imageData.width;
-  const height = imageData.height;
-  const newPix = Object.assign([], pix);
-  for (let i = 0; i < height; i++) {
-    for (let j = 0; j < width; j++) {
-      const off = (i * width + j) * 4;
-      const dstOff = ((height - i - 1) * width + j) * 4;
-      pix[dstOff] = newPix[off];
-      pix[dstOff + 1] = newPix[off + 1];
-      pix[dstOff + 2] = newPix[off + 2];
-      pix[dstOff + 3] = newPix[off + 3];
+export const verticalFlip = ({ data, width, height }) => {
+  const newPix = Object.assign([], data);
+  for (let i = 0; i < height; i += 1) {
+    for (let j = 0; j < width; j += 1) {
+      const off = ((i * width) + j) * 4;
+      const dstOff = (((height - i - 1) * width) + j) * 4;
+      newPix[dstOff] = data[off];
+      newPix[dstOff + 1] = data[off + 1];
+      newPix[dstOff + 2] = data[off + 2];
+      newPix[dstOff + 3] = data[off + 3];
     }
   }
-  return pix;
+  return newPix;
 };
 
 export const doubleFlip = (imageData) => {

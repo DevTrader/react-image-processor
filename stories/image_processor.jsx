@@ -13,36 +13,50 @@ storiesOf('<ImageProcessor />', module)
   .add('enhance', () => (
     <ImageProcessor
       alt="react story book sample image"
-      src={src}
       effect="enhance"
+      src={src}
     />
   ))
   .add('grayscale', () => (
     <ImageProcessor
       alt="react story book sample image"
-      src={src}
       effect="grayscale"
+      src={src}
     />
   ))
   .add('sepia', () => (
     <ImageProcessor
       alt="react story book sample image"
-      src={src}
       effect="sepia"
+      src={src}
     />
   ))
   .add('luminance', () => (
     <ImageProcessor
       alt="react story book sample image"
-      src={src}
       effect="luminance"
+      src={src}
     />
   ))
   .add('negaposi', () => (
     <ImageProcessor
       alt="react story book sample image"
-      src={src}
       effect="negaposi"
+      src={src}
+    />
+  ))
+  .add('horizontalflip', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="horizontalflip"
+      src={src}
+    />
+  ))
+  .add('verticalflip', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="verticalflip"
+      src={src}
     />
   ))
   ;

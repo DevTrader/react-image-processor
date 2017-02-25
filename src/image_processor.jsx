@@ -11,18 +11,17 @@ export default class ImageProcessor extends React.Component {
     };
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      src: props.src,
-    };
+  componentDidMount() {
+    const isRendered = this.img.width > 0 && this.img.height > 0;
+    if (isRendered) {
+      this.applyEffect();
+    }
   }
 
-  componentDidMount() {
+  applyEffect() {
     const imageData = this.getImageData();
-
     const func = effectsMap[this.props.effect.toLowerCase()];
-    const convertedPixels = func(imageData.data);
+    const convertedPixels = func(imageData);
     const clampedArray = Uint8ClampedArray.from(convertedPixels);
     const newImageData = new ImageData(clampedArray, this.img.width, this.img.height);
 
@@ -56,7 +55,7 @@ export default class ImageProcessor extends React.Component {
       <img
         ref={img => this.img = img}
         alt={this.props.alt}
-        src={this.state.src}
+        src={this.props.src}
       />
     );
   }
