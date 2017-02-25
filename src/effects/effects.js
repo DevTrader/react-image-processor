@@ -1,5 +1,5 @@
-import Lagrange from '../lagrange';
-import * as color from '../color';
+import Lagrange from './lagrange';
+import * as color from './color';
 
 /* eslint import/prefer-default-export: 0 */
 
@@ -32,8 +32,8 @@ export const enhance = (imageData) => {
   return pix;
 };
 
-export const grayscale = (imageData) => {
-  const pix = imageData.data;
+export const grayscale = (pixSrc) => {
+  const pix = Object.assign([], pixSrc);
   for (let i = 0, n = pix.length; i < n; i += 4) {
     const { r, g, b } = { r: pix[i], g: pix[i + 1], b: pix[i + 1] };
     const scale = color.convertNTSC(r, g, b);
