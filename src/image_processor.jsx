@@ -28,12 +28,9 @@ export default class ImageProcessor extends React.Component {
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
     const func = effectsMap[this.props.effect];
-    const convertedPixels = func(imageData);
+    func(imageData);
 
-    const clampedArray = Uint8ClampedArray.from(convertedPixels);
-    const newImageData = new ImageData(clampedArray, this.img.width, this.img.height);
-
-    context.putImageData(newImageData, 0, 0);
+    context.putImageData(imageData, 0, 0);
     const src = canvas.toDataURL();
     this.img.src = src;
   }

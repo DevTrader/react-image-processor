@@ -1,7 +1,7 @@
 import Lagrange from './lagrange';
 import * as color from './color';
 
-/* eslint import/prefer-default-export: 0 */
+/* eslint import/prefer-default-export: 0, no-param-reassign: 0 */
 
 const lagrangeRgbMap = require('./rgb_map');
 
@@ -23,57 +23,47 @@ const applyInstagramFilter = (filterType, pix) => {
 };
 
 export const enhance = ({ data }) => {
-  const pix = Object.assign([], data);
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i] *= 1.24;
-    pix[i + 1] *= 1.33;
-    pix[i + 2] *= 1.21;
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    data[i] *= 1.24;
+    data[i + 1] *= 1.33;
+    data[i + 2] *= 1.21;
   }
-  return pix;
 };
 
 export const grayscale = ({ data }) => {
-  const pix = Object.assign([], data);
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    const { r, g, b } = { r: pix[i], g: pix[i + 1], b: pix[i + 1] };
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    const { r, g, b } = { r: data[i], g: data[i + 1], b: data[i + 1] };
     const scale = color.convertNTSC(r, g, b);
-    pix[i] = scale;
-    pix[i + 1] = scale;
-    pix[i + 2] = scale;
+    data[i] = scale;
+    data[i + 1] = scale;
+    data[i + 2] = scale;
   }
-  return pix;
 };
 
 export const sepia = ({ data }) => {
-  const pix = Object.assign([], data);
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i] *= 1.07;
-    pix[i + 1] *= 0.74;
-    pix[i + 2] *= 0.43;
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    data[i] *= 1.07;
+    data[i + 1] *= 0.74;
+    data[i + 2] *= 0.43;
   }
-  return pix;
 };
 
 export const luminance = ({ data }) => {
-  const pix = Object.assign([], data);
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    const { r, g, b } = { r: pix[i], g: pix[i + 1], b: pix[i + 1] };
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    const { r, g, b } = { r: data[i], g: data[i + 1], b: data[i + 1] };
     const luminanceScale = color.convertLuminanceLinearRGB(r, g, b);
-    pix[i] = luminanceScale;
-    pix[i + 1] = luminanceScale;
-    pix[i + 2] = luminanceScale;
+    data[i] = luminanceScale;
+    data[i + 1] = luminanceScale;
+    data[i + 2] = luminanceScale;
   }
-  return pix;
 };
 
 export const negaposi = ({ data }) => {
-  const pix = Object.assign([], data);
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    pix[i] = 255 - pix[i];
-    pix[i + 1] = 255 - pix[i + 1];
-    pix[i + 2] = 255 - pix[i + 2];
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    data[i] = 255 - data[i];
+    data[i + 1] = 255 - data[i + 1];
+    data[i + 2] = 255 - data[i + 2];
   }
-  return pix;
 };
 
 export const opacity = (imageData, options) => {
@@ -184,13 +174,12 @@ export const horizontalFlip = ({ data, width, height }) => {
     for (let j = 0; j < width; j += 1) {
       const off = (w + j) * 4;
       const dstOff = (w + (width - j - 1)) * 4;
-      newPix[dstOff] = data[off];
-      newPix[dstOff + 1] = data[off + 1];
-      newPix[dstOff + 2] = data[off + 2];
-      newPix[dstOff + 3] = data[off + 3];
+      data[dstOff] = newPix[off];
+      data[dstOff + 1] = newPix[off + 1];
+      data[dstOff + 2] = newPix[off + 2];
+      data[dstOff + 3] = newPix[off + 3];
     }
   }
-  return newPix;
 };
 
 export const verticalFlip = ({ data, width, height }) => {
@@ -199,13 +188,12 @@ export const verticalFlip = ({ data, width, height }) => {
     for (let j = 0; j < width; j += 1) {
       const off = ((i * width) + j) * 4;
       const dstOff = (((height - i - 1) * width) + j) * 4;
-      newPix[dstOff] = data[off];
-      newPix[dstOff + 1] = data[off + 1];
-      newPix[dstOff + 2] = data[off + 2];
-      newPix[dstOff + 3] = data[off + 3];
+      data[dstOff] = newPix[off];
+      data[dstOff + 1] = newPix[off + 1];
+      data[dstOff + 2] = newPix[off + 2];
+      data[dstOff + 3] = newPix[off + 3];
     }
   }
-  return newPix;
 };
 
 export const doubleFlip = (imageData) => {
