@@ -7,7 +7,7 @@ export default class LagrangeFactory {
 
   static buildWithPoints(points) {
     const l = this.build();
-    l.addMultiPoints(points);
+    l.addPoints(points);
     return l;
   }
 }
