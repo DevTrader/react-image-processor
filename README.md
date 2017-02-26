@@ -41,17 +41,31 @@ yarn add react-image-processor
   />
 ```
 
+Some effects support 'options' props:
+
+```jsx
+<ImageProcessor
+  alt='react image sample'
+  src='./path/to/image.jpg'
+  effect='brighten'
+  options={{ value: 50 }}
+  />
+```
+
 ## API
 
-props | type | description
-------|------|--------------
-alt   |String| Same attribute with `<img />` tag's
-src   |String| Same attribute with `<img />` tag's
-effect|oneOf | one of [available effects](#available-effects) all in smaller cases
+props   |  type   | isRequired |  description
+--------|---------|------------|-----------------------------------------------------------------------
+alt     | String  | isRequired |  Same attribute with `<img />` tag's
+src     | String  | isRequired |  Same attribute with `<img />` tag's
+effect  | oneOf   | isRequired |  One of [available effects](#available-effects) in lower case
+options | Object  | optional   |  Options for each effects (e.g. 'value' for 'brighten' effect.)
 
 ### Available Effects
 
-See [this file in `master` branch](https://github.com/kenju/react-image-processor/blob/master/src/effects_shape.js) for all updated available lists.
+See Demo for example usage.
+
+Some effects supports options.
 
 - Basic filters
 	- grayscale
@@ -61,15 +75,15 @@ See [this file in `master` branch](https://github.com/kenju/react-image-processo
 	- darken
 	- opacity
 	- negaposi
-	- brightnessContrast
+	- brightnesscontrast
 	- huerotate
 	- saturate
-	- horizontalFlip
-	- verticalFlip
-	- doubleFlip
-	- horizontalMirror
-	- verticalMirror
-	- XYMirror
+	- horizontalflip
+	- verticalflip
+	- doubleflip
+	- horizontalmirror
+	- verticalmirror
+	- xymirror
 - Instagram filters
 	- lark
 	- reyes
@@ -96,13 +110,12 @@ See [this file in `master` branch](https://github.com/kenju/react-image-processo
 	- sutro
 	- toaster
 	- walden
-	- nineteenSeventySeven
+	- nineteenseventyseven
 	- kelvin
 
 ## Future
 
 - Improve perfomance in manipulating ImageData ( possibely with Web Worker API)
-- Support 'options' props to some of effects (e.g. `huerotate`, `darken`, etc)
 - Support plugin architecture ( ImageData |> Plugin Modules |> ImageData )
 - Improve spec with ava
 
