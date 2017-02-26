@@ -34,11 +34,13 @@ export default class ImageProcessor extends React.Component {
 
   applyEffect() {
     this.timeoutID = setTimeout(() => {
-      this.replaceImageData();
+      this.getEffectAppliedImageData()
+        .then(src => this.setState({ src }))
+        .catch(err => console.error(err));
     }, 0);
   }
 
-  getCanvas(width, height) {
+  getSingletonCanvas(width, height) {
     let canvas;
     if (this.canvas) {
       canvas = this.canvas;
@@ -50,18 +52,18 @@ export default class ImageProcessor extends React.Component {
     return canvas;
   }
 
-  replaceImageData() {
-    const canvas = this.getCanvas(this.img.width, this.img.height);
-    const context = canvas.getContext('2d');
-    context.drawImage(this.img, 0, 0);
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+  getEffectAppliedImageData() {
+    return new Promise((resolve) => {
+      const canvas = this.getSingletonCanvas(this.img.width, this.img.height);
+      const context = canvas.getContext('2d');
+      context.drawImage(this.img, 0, 0);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
-    const func = effectsMap[this.props.effect];
-    func(imageData, this.props.options);
+      const func = effectsMap[this.props.effect];
+      func(imageData, this.props.options);
 
-    context.putImageData(imageData, 0, 0);
-    this.setState({
-      src: canvas.toDataURL(),
+      context.putImageData(imageData, 0, 0);
+      resolve(canvas.toDataURL());
     });
   }
 
