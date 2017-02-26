@@ -4,5 +4,9 @@
   "editor.insertSpaces": true,
   "files.trimTrailingWhitespace": true,
   "files.autoSave": "onFocusChange",
+  "files.exclude": {
+    "lib/": true,
+    "doc/": true
+  },
   "eslint.autoFixOnSave": true
 }

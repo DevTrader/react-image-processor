@@ -1,7 +1,5 @@
 /* eslint import/prefer-default-export: 0, no-param-reassign: 0, no-mixed-operators: 0, */
 
-export const getUnit8Array = len => new Uint8Array(len);
-
 export const convertNTSC = (red, green, blue) => red * 0.29 + green * 0.58 + blue * 0.11;
 
 export const blackOrWhite = (red, green, blue, threshold) => {
@@ -12,7 +10,7 @@ export const blackOrWhite = (red, green, blue, threshold) => {
 export const convertLuminanceLinearRGB = (r, g, b) => r * 0.2126 + g * 0.7152 + b * 0.0722;
 
 export const identityLUT = () => {
-  const lut = getUnit8Array(256);
+  const lut = new Uint8Array(256);
   for (let i = 0; i < lut.length; i += 1) {
     lut[i] = i;
   }
@@ -21,10 +19,7 @@ export const identityLUT = () => {
 
 export const applyLUT = (pix, lut) => {
   const newPix = Object.assign({}, pix);
-  const red = lut.red;
-  const green = lut.green;
-  const blue = lut.blue;
-  const alpha = lut.alpha;
+  const { red, green, blue, alpha } = lut;
   const len = pix.length;
   for (let i = 0; i < len; i += 4) {
     pix[i] = red[newPix[i]];

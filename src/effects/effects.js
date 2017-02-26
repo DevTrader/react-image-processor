@@ -30,8 +30,7 @@ export const enhance = ({ data }) => {
 
 export const grayscale = ({ data }) => {
   for (let i = 0, n = data.length; i < n; i += 4) {
-    const { r, g, b } = { r: data[i], g: data[i + 1], b: data[i + 1] };
-    const scale = color.convertNTSC(r, g, b);
+    const scale = color.convertNTSC(data[i], data[i + 1], data[i + 1]);
     data[i] = scale;
     data[i + 1] = scale;
     data[i + 2] = scale;
@@ -48,8 +47,7 @@ export const sepia = ({ data }) => {
 
 export const luminance = ({ data }) => {
   for (let i = 0, n = data.length; i < n; i += 4) {
-    const { r, g, b } = { r: data[i], g: data[i + 1], b: data[i + 1] };
-    const luminanceScale = color.convertLuminanceLinearRGB(r, g, b);
+    const luminanceScale = color.convertLuminanceLinearRGB(data[i], data[i + 1], data[i + 2]);
     data[i] = luminanceScale;
     data[i + 1] = luminanceScale;
     data[i + 2] = luminanceScale;
@@ -92,7 +90,9 @@ export const darken = ({ data }, options = {}) => {
 export const threshold = ({ data }) => {
   const len = data.length;
   for (let i = 0; i < len; i += 4) {
-    const { r, g, b } = { r: data[i], g: data[i + 1], b: data[i + 1] };
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
     const thresholdScale = color.convertNTSC(r, g, b);
     const bw = color.blackOrWhite(r, g, b, thresholdScale);
     data[i] = bw;
@@ -131,7 +131,7 @@ export const brightnessContrast = ({ data }, options = {}) => {
   const contrastAdjust = (-128 * contrast) + 128;
   const brightnessAdjust = 255 * brightness;
   const adjust = contrastAdjust + brightnessAdjust;
-  const lut = color.getUnit8Array(256);
+  const lut = new Uint8Array(256);
   const len = lut.length;
   for (let i = 0; i < len; i += 1) {
     const c = (i * contrast) + adjust;
