@@ -32,6 +32,12 @@ export default class ImageProcessor extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.timeoutID) {
+      clearTimeout(this.timeoutID);
+    }
+  }
+
   applyEffect() {
     this.timeoutID = setTimeout(() => {
       this.getEffectAppliedImageData()
