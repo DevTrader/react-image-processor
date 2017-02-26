@@ -391,5 +391,41 @@ storiesOf('Instagram Effects', module)
       src={src}
     />
   ))
-  // --End: Instagram effects
+  ;
+
+storiesOf('Prop tips', module)
+  .addDecorator(story => (
+    <div style={{ textAlign: 'center' }}>
+      {story()}
+    </div>
+  ))
+  .add('multiply effects when onClick', () => {
+    class Wrapper extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          effect: 'enhance',
+        };
+      }
+
+      onClickHandler() {
+        this.setState({
+          effect: this.state.effect === 'enhance' ? 'grayscale' : 'enhance',
+        });
+      }
+
+      render() {
+        return (
+          <div onClick={() => this.onClickHandler()} >
+            <ImageProcessor
+              alt="react story book sample image"
+              effect={this.state.effect}
+              src={src}
+            />
+          </div>
+        );
+      }
+    }
+    return <Wrapper />;
+  })
   ;

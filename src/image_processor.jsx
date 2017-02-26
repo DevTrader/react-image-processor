@@ -7,7 +7,7 @@ export default class ImageProcessor extends React.Component {
     return {
       alt: React.PropTypes.string.isRequired,
       effect: effectsShape.isRequired,
-      options: React.PropTypes.options,
+      options: React.PropTypes.object,
       src: React.PropTypes.string.isRequired,
     };
   }
@@ -19,13 +19,23 @@ export default class ImageProcessor extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.effect !== nextProps.effect) {
+      this.applyEffect();
+    }
+  }
+
   componentDidMount() {
     const isRendered = this.img.width > 0 && this.img.height > 0;
     if (isRendered) {
-      this.timeoutID = setTimeout(() => {
-        this.applyEffect();
-      }, 0);
+      this.applyEffect();
     }
+  }
+
+  applyEffect() {
+    this.timeoutID = setTimeout(() => {
+      this.replaceImageData();
+    }, 0);
   }
 
   getCanvas(width, height) {
@@ -40,7 +50,7 @@ export default class ImageProcessor extends React.Component {
     return canvas;
   }
 
-  applyEffect() {
+  replaceImageData() {
     const canvas = this.getCanvas(this.img.width, this.img.height);
     const context = canvas.getContext('2d');
     context.drawImage(this.img, 0, 0);
