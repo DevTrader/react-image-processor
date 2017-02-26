@@ -1,23 +1,8 @@
-import Lagrange from './lagrange';
+import LagrangeFactory from './lagrange_factory';
 import lagrangeRgbMap from './rgb_map';
 import * as color from './color';
 
 /* eslint import/prefer-default-export: 0, no-param-reassign: 0 */
-
-const applyInstagramFilter = (filterType, data) => {
-  const rgbMap = lagrangeRgbMap[filterType];
-  const lagrangeR = new Lagrange(0, 0, 1, 1);
-  const lagrangeG = new Lagrange(0, 0, 1, 1);
-  const lagrangeB = new Lagrange(0, 0, 1, 1);
-  lagrangeR.addMultiPoints(rgbMap.r);
-  lagrangeG.addMultiPoints(rgbMap.g);
-  lagrangeB.addMultiPoints(rgbMap.b);
-  for (let i = 0, n = data.length; i < n; i += 4) {
-    data[i] = lagrangeR.valueOf(data[i]);
-    data[i + 1] = lagrangeB.valueOf(data[i + 1]);
-    data[i + 2] = lagrangeG.valueOf(data[i + 2]);
-  }
-};
 
 export const enhance = ({ data }) => {
   for (let i = 0, n = data.length; i < n; i += 4) {
@@ -227,6 +212,17 @@ export const XYMirror = ({ data }) => {
   }
 };
 
+const applyInstagramFilter = (filterType, data) => {
+  const rgbMap = lagrangeRgbMap[filterType];
+  const lagrangeR = LagrangeFactory.buildWithPoints(rgbMap.r);
+  const lagrangeG = LagrangeFactory.buildWithPoints(rgbMap.g);
+  const lagrangeB = LagrangeFactory.buildWithPoints(rgbMap.b);
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    data[i] = lagrangeR.valueOf(data[i]);
+    data[i + 1] = lagrangeB.valueOf(data[i + 1]);
+    data[i + 2] = lagrangeG.valueOf(data[i + 2]);
+  }
+};
 export const lark = ({ data }) => applyInstagramFilter('lark', data);
 export const reyes = ({ data }) => applyInstagramFilter('reyes', data);
 export const juno = ({ data }) => applyInstagramFilter('juno', data);
