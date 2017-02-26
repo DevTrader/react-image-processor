@@ -1,12 +1,11 @@
 import React from 'react';
-import effectsShape from './effects_shape';
 import effectsMap from './effects_map';
 
 export default class ImageProcessor extends React.Component {
   static get propTypes() {
     return {
       alt: React.PropTypes.string.isRequired,
-      effect: effectsShape.isRequired,
+      effect: React.PropTypes.oneOf(Object.keys(effectsMap)),
       options: React.PropTypes.object,
       src: React.PropTypes.string.isRequired,
     };
