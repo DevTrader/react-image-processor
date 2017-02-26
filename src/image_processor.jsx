@@ -6,8 +6,9 @@ export default class ImageProcessor extends React.Component {
   static get propTypes() {
     return {
       alt: React.PropTypes.string.isRequired,
-      src: React.PropTypes.string.isRequired,
       effect: effectsShape.isRequired,
+      options: React.PropTypes.options,
+      src: React.PropTypes.string.isRequired,
     };
   }
 
@@ -46,7 +47,7 @@ export default class ImageProcessor extends React.Component {
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
     const func = effectsMap[this.props.effect];
-    func(imageData);
+    func(imageData, this.props.options);
 
     context.putImageData(imageData, 0, 0);
     this.setState({

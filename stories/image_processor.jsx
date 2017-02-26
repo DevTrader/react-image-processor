@@ -4,13 +4,25 @@ import { storiesOf } from '@kadira/storybook';
 import ImageProcessor from '../src/image_processor';
 import src from './sample.jpg';
 
-storiesOf('<ImageProcessor />', module)
+storiesOf('Original', module)
   .addDecorator(story => (
     <div style={{ textAlign: 'center' }}>
       {story()}
     </div>
   ))
-  // --Start: Basic effects
+  .add('original', () => (
+    <img
+      alt="react story book sample"
+      src={src}
+    />
+  ));
+
+storiesOf('Basic Effects', module)
+  .addDecorator(story => (
+    <div style={{ textAlign: 'center' }}>
+      {story()}
+    </div>
+  ))
   .add('enhance', () => (
     <ImageProcessor
       alt="react story book sample image"
@@ -51,6 +63,14 @@ storiesOf('<ImageProcessor />', module)
       alt="react story book sample image"
       effect="opacity"
       src={src}
+    />
+  ))
+  .add('opacity (with options)', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="opacity"
+      src={src}
+      options={{ value: 0.1 }}
     />
   ))
   .add('brighten', () => (
@@ -136,9 +156,9 @@ storiesOf('<ImageProcessor />', module)
       effect="xymirror"
       src={src}
     />
-  ))
-  // --End: Basic effects
-  // --Start: Instagram effects
+  ));
+
+storiesOf('Instagram Effects', module)
   .add('lark', () => (
     <ImageProcessor
       alt="react story book sample image"

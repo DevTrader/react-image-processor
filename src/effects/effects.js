@@ -67,8 +67,8 @@ export const negaposi = ({ data }) => {
   }
 };
 
-export const opacity = ({ data }) => {
-  const val = 0.5;
+export const opacity = ({ data }, options = {}) => {
+  const val = options.value || 0.5;
   for (let i = 0, n = data.length; i < n; i += 4) {
     data[i + 3] = data[i + 3] * val;
   }
