@@ -1,5 +1,7 @@
 # react-image-processor
 
+[![npm version](https://badge.fury.io/js/react-image-processor.svg)](https://badge.fury.io/js/react-image-processor)
+
 > React Components built-in Image Processor.
 
 <!-- TOC -->
