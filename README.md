@@ -68,6 +68,7 @@ See Demo for example usage.
 Some effects supports options.
 
 - Basic filters
+	- none
 	- grayscale
 	- sepia
 	- luminance

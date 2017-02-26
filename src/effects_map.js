@@ -46,4 +46,5 @@ export default {
   horizontalmirror: effects.horizontalMirror,
   verticalmirror: effects.verticalMirror,
   xymirror: effects.XYMirror,
+  none: () => {},
 };

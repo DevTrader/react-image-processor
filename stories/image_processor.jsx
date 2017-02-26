@@ -11,8 +11,9 @@ storiesOf('Original', module)
     </div>
   ))
   .add('original', () => (
-    <img
-      alt="react story book sample"
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="none"
       src={src}
     />
   ));
