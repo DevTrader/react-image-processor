@@ -11,10 +11,19 @@ export default class ImageProcessor extends React.Component {
     };
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      src: props.src,
+    };
+  }
+
   componentDidMount() {
     const isRendered = this.img.width > 0 && this.img.height > 0;
     if (isRendered) {
-      this.applyEffect();
+      this.timeoutID = setTimeout(() => {
+        this.applyEffect();
+      }, 0);
     }
   }
 
@@ -40,7 +49,9 @@ export default class ImageProcessor extends React.Component {
     func(imageData);
 
     context.putImageData(imageData, 0, 0);
-    this.img.src = canvas.toDataURL();
+    this.setState({
+      src: canvas.toDataURL(),
+    });
   }
 
   render() {
@@ -48,7 +59,7 @@ export default class ImageProcessor extends React.Component {
       <img
         ref={img => this.img = img} // eslint-disable-line no-return-assign
         alt={this.props.alt}
-        src={this.props.src}
+        src={this.state.src}
       />
     );
   }
