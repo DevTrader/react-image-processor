@@ -1,6 +1,6 @@
 {
   "name": "react-image-processor",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "React Components built-in Image Processor.",
   "main": "lib/image_processor",
   "scripts": {
