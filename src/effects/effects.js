@@ -74,9 +74,8 @@ export const opacity = ({ data }, options = {}) => {
   }
 };
 
-// TODO: accept option
-export const brighten = ({ data }) => {
-  const val = 50;
+export const brighten = ({ data }, options = {}) => {
+  const val = options.value || 50;
   for (let i = 0, n = data.length; i < n; i += 4) {
     data[i] += val;
     data[i + 1] += val;
@@ -84,9 +83,8 @@ export const brighten = ({ data }) => {
   }
 };
 
-// TODO: accept option
-export const darken = ({ data }) => {
-  const val = 50;
+export const darken = ({ data }, options = {}) => {
+  const val = options.value || 50;
   for (let i = 0, n = data.length; i < n; i += 4) {
     data[i] -= val;
     data[i + 1] -= val;
@@ -106,9 +104,8 @@ export const threshold = ({ data }) => {
   }
 };
 
-// TODO: accept option
-export const hueRotate = ({ data }) => {
-  const deg = 45;
+export const hueRotate = ({ data }, options = {}) => {
+  const deg = options.degree || 45;
   for (let i = 0, n = data.length; i < n; i += 4) {
     const hsv = color.rgb2hsv(data[i], data[i + 1], data[i + 2]);
     hsv[0] *= deg / 360;
@@ -119,9 +116,8 @@ export const hueRotate = ({ data }) => {
   }
 };
 
-// TODO: accept option
-export const saturate = ({ data }) => {
-  const val = 20;
+export const saturate = ({ data }, options = {}) => {
+  const val = options.value || 50;
   for (let i = 0, n = data.length; i < n; i += 4) {
     const hsv = color.rgb2hsv(data[i], data[i + 1], data[i + 2]);
     hsv[1] *= val / 100;
@@ -132,10 +128,9 @@ export const saturate = ({ data }) => {
   }
 };
 
-// TODO: accept option
-export const brightnessContrast = ({ data }) => {
-  const brightness = -0.08;
-  const contrast = 1.5;
+export const brightnessContrast = ({ data }, options = {}) => {
+  const brightness = options.brightness || -0.08;
+  const contrast = options.contrast || 1.5;
   const contrastAdjust = (-128 * contrast) + 128;
   const brightnessAdjust = 255 * brightness;
   const adjust = contrastAdjust + brightnessAdjust;

@@ -80,11 +80,27 @@ storiesOf('Basic Effects', module)
       src={src}
     />
   ))
+  .add('brighten (with options)', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="brighten"
+      src={src}
+      options={{ value: 120 }}
+    />
+  ))
   .add('darken', () => (
     <ImageProcessor
       alt="react story book sample image"
       effect="darken"
       src={src}
+    />
+  ))
+  .add('darken (with options)', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="darken"
+      src={src}
+      options={{ value: 120 }}
     />
   ))
   .add('threshold', () => (
@@ -101,6 +117,14 @@ storiesOf('Basic Effects', module)
       src={src}
     />
   ))
+  .add('huerotate (with options)', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="huerotate"
+      src={src}
+      options={{ degree: 90 }}
+    />
+  ))
   .add('saturate', () => (
     <ImageProcessor
       alt="react story book sample image"
@@ -108,11 +132,30 @@ storiesOf('Basic Effects', module)
       src={src}
     />
   ))
+  .add('saturate (with options)', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="saturate"
+      src={src}
+      options={{ value: 5 }}
+    />
+  ))
   .add('brightnesscontrast', () => (
     <ImageProcessor
       alt="react story book sample image"
       effect="brightnesscontrast"
       src={src}
+    />
+  ))
+  .add('brightnesscontrast (with options)', () => (
+    <ImageProcessor
+      alt="react story book sample image"
+      effect="brightnesscontrast"
+      src={src}
+      options={{
+        brightness: 1.15,
+        contrast: 2.0,
+      }}
     />
   ))
   .add('horizontalflip', () => (
