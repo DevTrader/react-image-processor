@@ -394,7 +394,7 @@ storiesOf('Instagram Effects', module)
   ))
   ;
 
-storiesOf('Prop tips', module)
+storiesOf('Pro Tips', module)
   .addDecorator(story => (
     <div style={{ textAlign: 'center' }}>
       {story()}

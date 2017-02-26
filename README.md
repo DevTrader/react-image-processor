@@ -119,7 +119,7 @@ Some effects supports options.
 
 - Improve perfomance in manipulating ImageData ( possibely with Web Worker API)
 - Support plugin architecture ( ImageData |> Plugin Modules |> ImageData )
-- Improve spec with ava
+- Add more effects (e.g. Gaussian Blur, )
 
 ## License
 
