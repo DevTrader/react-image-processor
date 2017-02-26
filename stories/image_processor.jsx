@@ -428,4 +428,30 @@ storiesOf('Prop tips', module)
     }
     return <Wrapper />;
   })
+  .add('change effect onMouserHover', () => {
+    class Wrapper extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          effect: 'none',
+        };
+      }
+
+      render() {
+        return (
+          <div
+            onMouseEnter={() => this.setState({ effect: 'grayscale' })}
+            onMouseLeave={() => this.setState({ effect: 'none' })}
+          >
+            <ImageProcessor
+              alt="react story book sample image"
+              effect={this.state.effect}
+              src={src}
+            />
+          </div>
+        );
+      }
+    }
+    return <Wrapper />;
+  })
   ;
