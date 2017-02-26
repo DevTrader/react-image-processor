@@ -5,7 +5,6 @@ import * as color from './color';
 /* eslint import/prefer-default-export: 0, no-param-reassign: 0 */
 
 const applyInstagramFilter = (filterType, data) => {
-  const pix = Object.assign([], data);
   const rgbMap = lagrangeRgbMap[filterType];
   const lagrangeR = new Lagrange(0, 0, 1, 1);
   const lagrangeG = new Lagrange(0, 0, 1, 1);
@@ -13,10 +12,10 @@ const applyInstagramFilter = (filterType, data) => {
   lagrangeR.addMultiPoints(rgbMap.r);
   lagrangeG.addMultiPoints(rgbMap.g);
   lagrangeB.addMultiPoints(rgbMap.b);
-  for (let i = 0, n = pix.length; i < n; i += 4) {
-    data[i] = lagrangeR.valueOf(pix[i]);
-    data[i + 1] = lagrangeB.valueOf(pix[i + 1]);
-    data[i + 2] = lagrangeG.valueOf(pix[i + 2]);
+  for (let i = 0, n = data.length; i < n; i += 4) {
+    data[i] = lagrangeR.valueOf(data[i]);
+    data[i + 1] = lagrangeB.valueOf(data[i + 1]);
+    data[i + 2] = lagrangeG.valueOf(data[i + 2]);
   }
 };
 
