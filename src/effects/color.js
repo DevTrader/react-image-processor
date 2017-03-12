@@ -29,12 +29,73 @@ export const applyLUT = (pix, lut) => {
   }
 };
 
-// http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
-export const rgb2hsl = (red, green, blue) => {
-  let h;
-  let s;
-  let diff;
+const floatDigit = (n, decimal) => parseFloat(n.toFixed(decimal));
+const isInteger = n => Number.isInteger(n);
 
+const isValidRGB = (colorCode) => {
+  if (!isInteger(colorCode)) {
+    return false;
+  }
+  return colorCode >= 0 && colorCode < 256;
+};
+
+const isValidFloat = (n) => {
+  if (isNaN(n)) {
+    return false;
+  }
+  return n >= 0 && n <= 1;
+};
+
+export const rgb2hex = (r, g, b) => {
+  if (![r, g, b].every(isValidRGB)) {
+    throw new Error('Invalid Color Code');
+  }
+  const pix = [r, g, b];
+  const result = pix.map(currentValue => parseInt(currentValue, 10).toString(16));
+  return result.join('').toUpperCase();
+};
+
+export const hex2rgb = (hex) => {
+  const r = hex.substr(0, 2);
+  const g = hex.substr(2, 2);
+  const b = hex.substr(4, 2);
+  return [r, g, b].map((currentValue) => {
+    const currentHex = parseInt(currentValue, 16);
+    if (!isInteger(currentHex)) {
+      throw new Error('Invalid hex code');
+    }
+    return currentHex;
+  });
+};
+
+export const rgb2cmyk = (r, g, b) => {
+  if (![r, g, b].every(isValidRGB)) {
+    throw new Error('Invalid Color Code');
+  }
+  const max = Math.max(r, g, b);
+  const delta = 255 - max;
+  const c = (255 - r - delta) / (255 - delta);
+  const m = (255 - g - delta) / (255 - delta);
+  const y = (255 - b - delta) / (255 - delta);
+  const k = floatDigit(delta / 255, 4);
+  const normalize = n => isNaN(n) ? 0 : n;
+  return [c, m, y, k].map(normalize);
+};
+
+export const cmyk2rgb = (c, m, y, k) => {
+  if (![c, m, y, k].every(isValidFloat)) {
+    throw new Error('Invalid CMYK Code');
+  }
+  const r = 255 * (1 - c) * (1 - k);
+  const g = 255 * (1 - m) * (1 - k);
+  const b = 255 * (1 - y) * (1 - k);
+  return [r, g, b].map(Math.floor);
+};
+
+export const rgb2hsl = (red, green, blue) => {
+  if (![red, green, blue].every(isValidRGB)) {
+    throw new Error('Invalid Color Code');
+  }
   const r = red / 255;
   const g = green / 255;
   const b = blue / 255;
@@ -43,11 +104,13 @@ export const rgb2hsl = (red, green, blue) => {
   const min = Math.min(r, g, b);
   const l = (max + min) / 2;
 
-  if (max === min) {
-        // achromatic
+  let h;
+  let s;
+  const isAchromatic = (max === min);
+  if (isAchromatic) {
     h = s = 0;
   } else {
-    diff = max - min;
+    const diff = max - min;
     s = l > 0.5 ? diff / (2 - max - min) : diff / (max + min);
     switch (max) {
       case r:
@@ -68,44 +131,27 @@ export const rgb2hsl = (red, green, blue) => {
 };
 
 export const hsl2rgb = (h, s, l) => {
-  let r;
-  let g;
-  let b;
-  let q;
-  let p;
-
-  if (s === 0) {
-        // achromatic
-    r = g = b = l;
-  } else {
-    q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    p = 2 * l - q;
-    r = this.hue2rgb(p, q, h + 1 / 3);
-    g = this.hue2rgb(p, q, h);
-    b = this.hue2rgb(p, q, h - 1 / 3);
+  if (![h, s, l].every(isValidFloat)) {
+    throw new Error('Invalid HSL value');
   }
-  return [r * 255, g * 255, b * 255];
-};
-
-export const hue2rgb = (p, q, t) => {
-  let threshold = t;
-  switch (threshold) {
-    case threshold < 0:
-      threshold += 1;
-      break;
-    case threshold > 1:
-      threshold -= 1;
-      break;
-    case threshold < 1 / 6:
-      return p + (q - p) * 6 * threshold;
-    case threshold < 1 / 2:
-      return q;
-    case threshold < 2 / 3:
-      return p + (q - p) * (2 / 3 - threshold) * 6;
-    default:
-      return p;
+  const max = l + (s * (1 - Math.abs(2 * l - 1))) / 2;
+  const min = l - (s * (1 - Math.abs(2 * l - 1))) / 2;
+  const hue = h * 360;
+  let rgb;
+  if (hue >= 0 && hue < 60) {
+    rgb = [max, min + (max - min) * hue / 60, min];
+  } else if (hue >= 60 && hue < 120) {
+    rgb = [min + (max - min) * (120 - hue) / 60, max, min];
+  } else if (hue >= 120 && hue < 180) {
+    rgb = [min, max, min + (max - min) * (hue - 120) / 60];
+  } else if (hue >= 180 && hue < 240) {
+    rgb = [min, min + (max - min) * (240 - hue) / 60, max];
+  } else if (hue >= 240 && hue < 300) {
+    rgb = [min + (max - min) * (hue - 240) / 60, min, max];
+  } else if (hue >= 300 && hue < 360) {
+    rgb = [max, min, min + (max - min) * (360 - hue) / 60];
   }
-  return p;
+  return rgb.map(x => Math.round(x * 255));
 };
 
 export const rgb2hsv = (red, green, blue) => {
@@ -122,7 +168,7 @@ export const rgb2hsv = (red, green, blue) => {
   const s = max === 0 ? 0 : diff / max;
 
   if (max === min) {
-        // achromatic
+    // achromatic
     h = 0;
   } else {
     switch (max) {
