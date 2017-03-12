@@ -4,21 +4,21 @@ const assert = require('assert');
 
 const fixFloat = (n, d) => parseFloat(n.toFixed(d));
 
-describe('Colors#convertNTSC()', () => {
+describe('Colors#grayscaleWithNTSC()', () => {
   it('convert [0, 0, 0] to 0', () => {
-    assert.equal(Colors.convertNTSC(0, 0, 0), 0);
+    assert.equal(Colors.grayscaleWithNTSC(0, 0, 0), 0);
   });
   it('convert RGB(255, 255, 255) to 249.9', () => {
-    const scale = Colors.convertNTSC(255, 255, 255);
-    assert.equal(fixFloat(scale, 1), 249.9);
+    const scale = Colors.grayscaleWithNTSC(255, 255, 255);
+    assert.equal(fixFloat(scale, 1), 255.0);
   });
   it('convert RGB(100, 100, 100) to 98', () => {
-    const scale = Colors.convertNTSC(100, 100, 100);
-    assert.equal(fixFloat(scale, 1), 98.0);
+    const scale = Colors.grayscaleWithNTSC(100, 100, 100);
+    assert.equal(fixFloat(scale, 1), 100.0);
   });
   it('throws error if input color range is invalid', () => {
     try {
-      Colors.convertNTSC(300, -100, 1000);
+      Colors.grayscaleWithNTSC(300, -100, 1000);
     } catch (error) {
       assert.equal(error.message, 'Invalid Color Code');
     }
