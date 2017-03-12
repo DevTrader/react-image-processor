@@ -1,6 +1,6 @@
 # react-image-processor
 
-[![npm version](https://badge.fury.io/js/react-image-processor.svg)](https://badge.fury.io/js/react-image-processor)
+[![npm version](https://badge.fury.io/js/react-image-processor.svg)](https://badge.fury.io/js/react-image-processor) [![CircleCI](https://circleci.com/gh/kenju/react-image-processor.svg?style=svg)](https://circleci.com/gh/kenju/react-image-processor)
 
 > React Components built-in Image Processor.
 
