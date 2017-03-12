@@ -1,5 +1,23 @@
 /* eslint import/prefer-default-export: 0, no-param-reassign: 0, no-mixed-operators: 0, */
 
+const floatDigit = (n, decimal) => parseFloat(n.toFixed(decimal));
+
+const isInteger = n => Number.isInteger(n);
+
+const isValidRGB = (colorCode) => {
+  if (!isInteger(colorCode)) {
+    return false;
+  }
+  return colorCode >= 0 && colorCode < 256;
+};
+
+const isValidFloat = (n) => {
+  if (isNaN(n)) {
+    return false;
+  }
+  return n >= 0 && n <= 1;
+};
+
 // @see https://en.wikipedia.org/wiki/Grayscale
 export const grayscaleWithNTSC = (r, g, b) => r * 0.299 + g * 0.587 + b * 0.114;
 
@@ -7,8 +25,8 @@ export const grayscaleWithNTSC = (r, g, b) => r * 0.299 + g * 0.587 + b * 0.114;
 export const convertLuminanceLinearRGB = (r, g, b) => r * 0.2126 + g * 0.7152 + b * 0.0722;
 
 export const binarize = (red, green, blue, threshold) => {
-  const value = (red + green + blue) * 0.33;
-  return (threshold >= value) ? 255 : 0;
+  const average = (red + green + blue) * 0.33;
+  return (threshold >= average) ? 255 : 0;
 };
 
 export const identityLUT = () => {
@@ -31,30 +49,12 @@ export const applyLUT = (pix, lut) => {
   }
 };
 
-const floatDigit = (n, decimal) => parseFloat(n.toFixed(decimal));
-const isInteger = n => Number.isInteger(n);
-
-const isValidRGB = (colorCode) => {
-  if (!isInteger(colorCode)) {
-    return false;
-  }
-  return colorCode >= 0 && colorCode < 256;
-};
-
-const isValidFloat = (n) => {
-  if (isNaN(n)) {
-    return false;
-  }
-  return n >= 0 && n <= 1;
-};
-
 export const rgb2hex = (r, g, b) => {
   if (![r, g, b].every(isValidRGB)) {
     throw new Error('Invalid Color Code');
   }
-  const pix = [r, g, b];
-  const result = pix.map(currentValue => parseInt(currentValue, 10).toString(16));
-  return result.join('').toUpperCase();
+  const hexify = v => parseInt(v, 10).toString(16);
+  return [r, g, b].map(hexify).join('').toUpperCase();
 };
 
 export const hex2rgb = (hex) => {
