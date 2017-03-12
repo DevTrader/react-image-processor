@@ -1,13 +1,15 @@
 /* eslint import/prefer-default-export: 0, no-param-reassign: 0, no-mixed-operators: 0, */
 
-export const convertNTSC = (red, green, blue) => red * 0.29 + green * 0.58 + blue * 0.11;
+// @see https://en.wikipedia.org/wiki/Grayscale
+export const convertNTSC = (r, g, b) => r * 0.299 + g * 0.587 + b * 0.114;
 
-export const blackOrWhite = (red, green, blue, threshold) => {
+// @see https://en.wikipedia.org/wiki/Relative_luminance
+export const convertLuminanceLinearRGB = (r, g, b) => r * 0.2126 + g * 0.7152 + b * 0.0722;
+
+export const binarize = (red, green, blue, threshold) => {
   const value = (red + green + blue) * 0.33;
   return (threshold >= value) ? 255 : 0;
 };
-
-export const convertLuminanceLinearRGB = (r, g, b) => r * 0.2126 + g * 0.7152 + b * 0.0722;
 
 export const identityLUT = () => {
   const lut = new Uint8Array(256);

@@ -78,7 +78,7 @@ export const threshold = ({ data }) => {
     const g = data[i + 1];
     const b = data[i + 2];
     const thresholdScale = color.convertNTSC(r, g, b);
-    const bw = color.blackOrWhite(r, g, b, thresholdScale);
+    const bw = color.binarize(r, g, b, thresholdScale);
     data[i] = bw;
     data[i + 1] = bw;
     data[i + 2] = bw;
