@@ -78,7 +78,7 @@ export const rgb2cmyk = (r, g, b) => {
   const m = (255 - g - delta) / (255 - delta);
   const y = (255 - b - delta) / (255 - delta);
   const k = floatDigit(delta / 255, 4);
-  const normalize = n => isNaN(n) ? 0 : n;
+  const normalize = n => isNaN(n) ? 0 : n; // eslint-disable-line no-confusing-arrow
   return [c, m, y, k].map(normalize);
 };
 
