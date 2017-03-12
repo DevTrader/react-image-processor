@@ -58,10 +58,8 @@ export const rgb2hex = (r, g, b) => {
 };
 
 export const hex2rgb = (hex) => {
-  const r = hex.substr(0, 2);
-  const g = hex.substr(2, 2);
-  const b = hex.substr(4, 2);
-  return [r, g, b].map((currentValue) => {
+  const rgb = hex.match(/[0-9a-zA-Z]{1,2}/g);
+  return rgb.map((currentValue) => {
     const currentHex = parseInt(currentValue, 16);
     if (!isInteger(currentHex)) {
       throw new Error('Invalid hex code');
