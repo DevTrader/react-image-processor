@@ -44,7 +44,7 @@ export default class ImageProcessor extends React.Component {
       this.timeoutID = setTimeout(() => {
         this.getEffectAppliedImageData(effect)
           .then(src => this.setState({ src }))
-          .catch(err => console.error(err));
+          .catch(err => console.error(err)); // eslint-disable-line no-console
       }, 0);
     }
   }

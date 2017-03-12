@@ -4,47 +4,47 @@ const assert = require('assert');
 
 const fixFloat = (n, d) => parseFloat(n.toFixed(d));
 
-describe('Colors#convertNTSC()', () => {
+describe('Colors#grayscaleWithNTSC()', () => {
   it('convert [0, 0, 0] to 0', () => {
-    assert.equal(Colors.convertNTSC(0, 0, 0), 0);
+    assert.equal(Colors.grayscaleWithNTSC(0, 0, 0), 0);
   });
   it('convert RGB(255, 255, 255) to 249.9', () => {
-    const scale = Colors.convertNTSC(255, 255, 255);
-    assert.equal(fixFloat(scale, 1), 249.9);
+    const scale = Colors.grayscaleWithNTSC(255, 255, 255);
+    assert.equal(fixFloat(scale, 1), 255.0);
   });
   it('convert RGB(100, 100, 100) to 98', () => {
-    const scale = Colors.convertNTSC(100, 100, 100);
-    assert.equal(fixFloat(scale, 1), 98.0);
+    const scale = Colors.grayscaleWithNTSC(100, 100, 100);
+    assert.equal(fixFloat(scale, 1), 100.0);
   });
   it('throws error if input color range is invalid', () => {
     try {
-      Colors.convertNTSC(300, -100, 1000);
+      Colors.grayscaleWithNTSC(300, -100, 1000);
     } catch (error) {
       assert.equal(error.message, 'Invalid Color Code');
     }
   });
 });
 
-describe('Colors#blackOrWhite()', () => {
+describe('Colors#binarize()', () => {
   it('return 255 if RGB(0, 0, 0) with threshold 0 is given', () => {
-    const scale = Colors.blackOrWhite(0, 0, 0, 0);
+    const scale = Colors.binarize(0, 0, 0, 0);
     assert.equal(scale, 255);
   });
   it('return 0 if RGB(100, 100, 100) with threshold 50 is given', () => {
-    const scale = Colors.blackOrWhite(255, 255, 255, 0);
+    const scale = Colors.binarize(255, 255, 255, 0);
     assert.equal(scale, 0);
   });
   it('return 0 if RGB(100, 100, 100) with threshold 98 is given', () => {
-    const scale = Colors.blackOrWhite(100, 100, 100, 98);
+    const scale = Colors.binarize(100, 100, 100, 98);
     assert.equal(scale, 0);
   });
   it('return 255 if RGB(100, 100, 100) with threshold 99 is given', () => {
-    const scale = Colors.blackOrWhite(100, 100, 100, 99);
+    const scale = Colors.binarize(100, 100, 100, 99);
     assert.equal(scale, 255);
   });
   it('throws error if input color range is invalid', () => {
     try {
-      Colors.blackOrWhite(300, -100, 1000, 50);
+      Colors.binarize(300, -100, 1000, 50);
     } catch (error) {
       assert.equal(error.message, 'Invalid Color Code');
     }

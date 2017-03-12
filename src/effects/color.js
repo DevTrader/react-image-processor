@@ -1,13 +1,33 @@
 /* eslint import/prefer-default-export: 0, no-param-reassign: 0, no-mixed-operators: 0, */
 
-export const convertNTSC = (red, green, blue) => red * 0.29 + green * 0.58 + blue * 0.11;
+const floatDigit = (n, decimal) => parseFloat(n.toFixed(decimal));
 
-export const blackOrWhite = (red, green, blue, threshold) => {
-  const value = (red + green + blue) * 0.33;
-  return (threshold >= value) ? 255 : 0;
+const isInteger = n => Number.isInteger(n);
+
+const isValidRGB = (colorCode) => {
+  if (!isInteger(colorCode)) {
+    return false;
+  }
+  return colorCode >= 0 && colorCode < 256;
 };
 
+const isValidFloat = (n) => {
+  if (isNaN(n)) {
+    return false;
+  }
+  return n >= 0 && n <= 1;
+};
+
+// @see https://en.wikipedia.org/wiki/Grayscale
+export const grayscaleWithNTSC = (r, g, b) => r * 0.299 + g * 0.587 + b * 0.114;
+
+// @see https://en.wikipedia.org/wiki/Relative_luminance
 export const convertLuminanceLinearRGB = (r, g, b) => r * 0.2126 + g * 0.7152 + b * 0.0722;
+
+export const binarize = (red, green, blue, threshold) => {
+  const average = (red + green + blue) * 0.33;
+  return (threshold >= average) ? 255 : 0;
+};
 
 export const identityLUT = () => {
   const lut = new Uint8Array(256);
@@ -29,37 +49,17 @@ export const applyLUT = (pix, lut) => {
   }
 };
 
-const floatDigit = (n, decimal) => parseFloat(n.toFixed(decimal));
-const isInteger = n => Number.isInteger(n);
-
-const isValidRGB = (colorCode) => {
-  if (!isInteger(colorCode)) {
-    return false;
-  }
-  return colorCode >= 0 && colorCode < 256;
-};
-
-const isValidFloat = (n) => {
-  if (isNaN(n)) {
-    return false;
-  }
-  return n >= 0 && n <= 1;
-};
-
 export const rgb2hex = (r, g, b) => {
   if (![r, g, b].every(isValidRGB)) {
     throw new Error('Invalid Color Code');
   }
-  const pix = [r, g, b];
-  const result = pix.map(currentValue => parseInt(currentValue, 10).toString(16));
-  return result.join('').toUpperCase();
+  const hexify = v => parseInt(v, 10).toString(16);
+  return [r, g, b].map(hexify).join('').toUpperCase();
 };
 
 export const hex2rgb = (hex) => {
-  const r = hex.substr(0, 2);
-  const g = hex.substr(2, 2);
-  const b = hex.substr(4, 2);
-  return [r, g, b].map((currentValue) => {
+  const rgb = hex.match(/[0-9a-zA-Z]{1,2}/g);
+  return rgb.map((currentValue) => {
     const currentHex = parseInt(currentValue, 16);
     if (!isInteger(currentHex)) {
       throw new Error('Invalid hex code');
@@ -78,7 +78,7 @@ export const rgb2cmyk = (r, g, b) => {
   const m = (255 - g - delta) / (255 - delta);
   const y = (255 - b - delta) / (255 - delta);
   const k = floatDigit(delta / 255, 4);
-  const normalize = n => isNaN(n) ? 0 : n;
+  const normalize = n => isNaN(n) ? 0 : n; // eslint-disable-line no-confusing-arrow
   return [c, m, y, k].map(normalize);
 };
 

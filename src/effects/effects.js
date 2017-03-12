@@ -14,7 +14,7 @@ export const enhance = ({ data }) => {
 
 export const grayscale = ({ data }) => {
   for (let i = 0, n = data.length; i < n; i += 4) {
-    const scale = color.convertNTSC(data[i], data[i + 1], data[i + 1]);
+    const scale = color.grayscaleWithNTSC(data[i], data[i + 1], data[i + 1]);
     data[i] = scale;
     data[i + 1] = scale;
     data[i + 2] = scale;
@@ -77,8 +77,8 @@ export const threshold = ({ data }) => {
     const r = data[i];
     const g = data[i + 1];
     const b = data[i + 2];
-    const thresholdScale = color.convertNTSC(r, g, b);
-    const bw = color.blackOrWhite(r, g, b, thresholdScale);
+    const thresholdScale = color.grayscaleWithNTSC(r, g, b);
+    const bw = color.binarize(r, g, b, thresholdScale);
     data[i] = bw;
     data[i + 1] = bw;
     data[i + 2] = bw;
